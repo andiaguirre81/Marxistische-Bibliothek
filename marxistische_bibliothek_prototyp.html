@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Marxistische Bibliothek – Prototyp</title>
+<style>
+:root{--bg:#f3efe6;--paper:#fffdf8;--ink:#211f1c;--muted:#746f66;--red:#8d1f25;--red2:#b13b3f;--line:#d9d1c4;--chip:#eee6da;--shadow:0 12px 35px rgba(48,36,30,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:1120px;margin:auto;padding:24px}.hero{background:linear-gradient(135deg,#6f161b,#a52a30);color:white;border-radius:26px;padding:34px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"M";position:absolute;right:-10px;top:-55px;font-family:Georgia,serif;font-size:260px;font-weight:700;opacity:.07}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:800;opacity:.8}.hero h1{font-family:Georgia,serif;font-size:clamp(36px,6vw,68px);line-height:.95;margin:10px 0 12px;max-width:720px}.hero p{max-width:720px;font-size:17px;line-height:1.55;margin:0;opacity:.92}.source{margin-top:18px;font-size:13px;opacity:.78}.searchbox{background:var(--paper);border-radius:22px;padding:18px;margin-top:-2px;box-shadow:var(--shadow);position:relative}.grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin:0 0 6px 4px}.field input,.field select{width:100%;border:1px solid var(--line);background:white;color:var(--ink);border-radius:13px;padding:13px 14px;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:var(--red2);box-shadow:0 0 0 3px rgba(177,59,63,.12)}.topics{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.topic{border:1px solid var(--line);background:var(--chip);padding:8px 11px;border-radius:999px;font-size:13px;cursor:pointer}.topic.active{background:var(--red);color:white;border-color:var(--red)}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:30px 2px 13px}.sectionhead h2{font-family:Georgia,serif;font-size:28px;margin:0}.count{color:var(--muted);font-size:14px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card{background:var(--paper);border:1px solid #e5ddd1;border-radius:19px;padding:19px;box-shadow:0 3px 12px rgba(50,40,30,.035);display:flex;flex-direction:column;gap:11px}.meta{display:flex;justify-content:space-between;gap:8px;align-items:center}.author{font-weight:800;color:var(--red)}.year{color:var(--muted);font-size:13px}.card h3{font-family:Georgia,serif;font-size:22px;line-height:1.15;margin:0}.desc{color:#5d584f;line-height:1.45;font-size:14px;min-height:42px}.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-size:11px;background:#f0ebe3;border-radius:999px;padding:5px 8px;color:#625d55}.actions{display:flex;gap:8px;margin-top:auto}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:10px;padding:10px 12px;font-weight:750;font-size:13px;border:1px solid var(--line);color:var(--ink);background:white}.btn.primary{background:var(--red);color:white;border-color:var(--red)}.empty{grid-column:1/-1;background:var(--paper);border-radius:16px;padding:30px;text-align:center;color:var(--muted)}.footer{margin:34px 2px 8px;color:var(--muted);font-size:12px;line-height:1.5}.notice{margin-top:18px;background:#fff8e8;border:1px solid #ead9ad;border-radius:14px;padding:13px 15px;font-size:13px;line-height:1.45}.mobilebar{display:none}
+@media(max-width:760px){.wrap{padding:12px}.hero{padding:28px 22px;border-radius:20px}.grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.searchbox{border-radius:18px}.desc{min-height:0}.sectionhead{align-items:center}.mobilebar{display:block;font-size:12px;color:var(--muted);margin-top:7px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Prototyp · deutschsprachiges Archiv</div>
+    <h1>Marxistische Bibliothek</h1>
+    <p>Finde Texte nach Autor, Thema oder Suchbegriff – und springe anschließend direkt zum Original im Marxists’ Internet Archive.</p>
+    <div class="source">Keine Kopie des Archivs, sondern ein komfortabler Leseführer und Index.</div>
+  </section>
+
+  <section class="searchbox">
+    <div class="grid">
+      <div class="field"><label for="q">Wonach suchst du?</label><input id="q" placeholder="z. B. Anarchismus, Staat, Faschismus, Religion …"></div>
+      <div class="field"><label for="author">Autor</label><select id="author"><option value="">Alle Autoren</option></select></div>
+      <div class="field"><label for="sort">Sortierung</label><select id="sort"><option value="relevance">Relevanz</option><option value="yearAsc">Jahr ↑</option><option value="yearDesc">Jahr ↓</option><option value="author">Autor A–Z</option></select></div>
+    </div>
+    <div class="topics" id="topics"></div>
+    <div class="mobilebar">Tipp: Mehrere Filter lassen sich kombinieren.</div>
+  </section>
+
+  <div class="notice"><strong>Idee für die Vollversion:</strong> Der Datenbestand wird aus den Autorenseiten des deutschen MIA als Metadaten-Index aufgebaut. Die App speichert nur Titel, Autor, Datum, Themen-Tags, Kurzbeschreibung und Original-Link.</div>
+
+  <div class="sectionhead"><h2>Texte</h2><div class="count" id="count"></div></div>
+  <main class="cards" id="cards"></main>
+  <div class="footer">Prototyp zur Strukturfindung. Originaltexte verbleiben beim Marxists’ Internet Archive. Themen-Tags und Kurzbeschreibungen sind redaktionelle Ergänzungen dieses Prototyps.</div>
+</div>
+<script>
+const works = [
+ {a:'Karl Marx',y:1843,t:'Zur Kritik der Hegelschen Rechtsphilosophie',topics:['Staat','Philosophie','Religion'],d:'Frühe Kritik von Staat, Recht und Hegels politischer Philosophie.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1843/kritik/index.htm'},
+ {a:'Karl Marx',y:1844,t:'Ökonomisch-philosophische Manuskripte',topics:['Kapitalismus','Entfremdung','Philosophie'],d:'Arbeit, Entfremdung, Privateigentum und menschliche Emanzipation.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1844/oek-phil/'},
+ {a:'Karl Marx',y:1845,t:'Thesen über Feuerbach',topics:['Philosophie','Materialismus'],d:'Kurze Thesen über Praxis, Materialismus und gesellschaftliche Veränderung.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1845/thesen/'},
+ {a:'Karl Marx / Friedrich Engels',y:1846,t:'Die deutsche Ideologie',topics:['Materialismus','Ideologie','Klasse'],d:'Grundlagen der materialistischen Geschichtsauffassung und Ideologiekritik.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1846/d-id/'},
+ {a:'Karl Marx',y:1847,t:'Das Elend der Philosophie',topics:['Anarchismus','Proudhon','Ökonomie'],d:'Marx’ direkte Polemik gegen Proudhon und dessen politische Ökonomie.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1847/elend/'},
+ {a:'Friedrich Engels',y:1847,t:'Grundsätze des Kommunismus',topics:['Kommunismus','Klasse','Revolution'],d:'Programmartiger Frage-und-Antwort-Text zu Kommunismus und Arbeiterbewegung.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1847/grunds/'},
+ {a:'Karl Marx / Friedrich Engels',y:1848,t:'Manifest der Kommunistischen Partei',topics:['Kommunismus','Klasse','Revolution'],d:'Klassischer programmatischer Text über Klassenkampf, Bourgeoisie und Proletariat.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1848/manifest/'},
+ {a:'Karl Marx',y:1871,t:'Der Bürgerkrieg in Frankreich',topics:['Staat','Pariser Kommune','Revolution'],d:'Marx über die Pariser Kommune und die politische Form proletarischer Herrschaft.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1871/05/buergerkrieg/'},
+ {a:'Friedrich Engels',y:1873,t:'Von der Autorität',topics:['Anarchismus','Autorität','Revolution'],d:'Kurze Engels-Polemik gegen antiautoritäre Positionen.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1873/02/autoritaet.htm'},
+ {a:'Friedrich Engels',y:1873,t:'Die Bakunisten an der Arbeit',topics:['Anarchismus','Bakunin','Spanien'],d:'Engels’ Kritik an bakunistischer Politik anhand der Ereignisse in Spanien.',u:'https://www.marxists.org/deutsch/archiv/marx-engels/1873/xx/bakunisten.htm'},
+ {a:'Michail Bakunin',y:1871,t:'Gott und der Staat',topics:['Anarchismus','Religion','Staat'],d:'Bakunins bekannte Kritik religiöser und staatlicher Autorität.',u:'https://www.marxists.org/deutsch/referenz/bakunin/1871/gott-staat/'},
+ {a:'Michail Bakunin',y:1871,t:'Sozialismus und Freiheit',topics:['Anarchismus','Sozialismus','Freiheit'],d:'Bakunin über Sozialismus, Freiheit und revolutionäre Politik.',u:'https://www.marxists.org/deutsch/referenz/bakunin/'},
+ {a:'Wladimir Lenin',y:1901,t:'Anarchismus und Sozialismus (Thesen)',topics:['Anarchismus','Sozialismus','Staat'],d:'Kurze frühe Thesen Lenins zur Abgrenzung von Anarchismus und Sozialismus.',u:'https://www.marxists.org/deutsch/archiv/lenin/1901/xx/anarch.htm'},
+ {a:'Wladimir Lenin',y:1902,t:'Was tun?',topics:['Partei','Organisation','Revolution'],d:'Lenin über politische Organisation, Bewusstsein und die revolutionäre Partei.',u:'https://www.marxists.org/deutsch/archiv/lenin/1902/wastun/'},
+ {a:'Wladimir Lenin',y:1905,t:'Sozialismus und Religion',topics:['Religion','Sozialismus','Partei'],d:'Lenin über Religion, Staat und die Haltung der Arbeiterpartei.',u:'https://www.marxists.org/deutsch/archiv/lenin/1905/12/religion.htm'},
+ {a:'Wladimir Lenin',y:1916,t:'Der Imperialismus als höchstes Stadium des Kapitalismus',topics:['Imperialismus','Kapitalismus','Krieg'],d:'Analyse von Monopolen, Finanzkapital und imperialistischer Weltordnung.',u:'https://www.marxists.org/deutsch/archiv/lenin/1917/imp/'},
+ {a:'Wladimir Lenin',y:1917,t:'Aprilthesen',topics:['Revolution','Staat','Partei'],d:'Lenins politische Orientierung nach der Februarrevolution 1917.',u:'https://www.marxists.org/deutsch/archiv/lenin/1917/04/thesen.htm'},
+ {a:'Wladimir Lenin',y:1917,t:'Staat und Revolution',topics:['Staat','Anarchismus','Revolution'],d:'Grundtext zur Staatsfrage; Kapitel IV enthält die ausdrückliche Polemik gegen die Anarchisten.',u:'https://www.marxists.org/deutsch/archiv/lenin/1917/staatrev/'},
+ {a:'Rosa Luxemburg',y:1899,t:'Sozialreform oder Revolution?',topics:['Reform','Revolution','Kapitalismus'],d:'Luxemburgs grundlegende Auseinandersetzung mit Eduard Bernsteins Revisionismus.',u:'https://www.marxists.org/deutsch/archiv/luxemburg/1899/sozrefrev/'},
+ {a:'Rosa Luxemburg',y:1906,t:'Massenstreik, Partei und Gewerkschaften',topics:['Streik','Partei','Revolution'],d:'Über Massenstreik, Organisation und die Dynamik revolutionärer Bewegungen.',u:'https://www.marxists.org/deutsch/archiv/luxemburg/1906/mapage/'},
+ {a:'Rosa Luxemburg',y:1913,t:'Die Akkumulation des Kapitals',topics:['Kapitalismus','Imperialismus','Ökonomie'],d:'Luxemburgs Beitrag zur Debatte über Akkumulation und Expansion des Kapitalismus.',u:'https://www.marxists.org/deutsch/archiv/luxemburg/1913/akkkap/'},
+ {a:'Rosa Luxemburg',y:1918,t:'Zur russischen Revolution',topics:['Revolution','Demokratie','Russland'],d:'Solidarische, aber kritische Auseinandersetzung mit der bolschewistischen Revolution.',u:'https://www.marxists.org/deutsch/archiv/luxemburg/1918/russrev/'},
+ {a:'Antonio Gramsci',y:1919,t:'Arbeiterdemokratie',topics:['Räte','Demokratie','Staat'],d:'Gramsci über Arbeiterräte und Formen sozialistischer Demokratie.',u:'https://www.marxists.org/deutsch/archiv/gramsci/1919/06/arbdemokratie.html'},
+ {a:'Antonio Gramsci',y:1919,t:'Der Staat und der Sozialismus',topics:['Staat','Sozialismus','Revolution'],d:'Früher Gramsci-Text zur Staats- und Sozialismusfrage.',u:'https://www.marxists.org/deutsch/archiv/gramsci/'},
+ {a:'Antonio Gramsci',y:1920,t:'Rede an die Anarchisten',topics:['Anarchismus','Räte','Revolution'],d:'Direkte Auseinandersetzung Gramscis mit anarchistischen Positionen.',u:'https://www.marxists.org/deutsch/archiv/gramsci/'},
+ {a:'Leo Trotzki',y:1906,t:'Ergebnisse und Perspektiven',topics:['Revolution','Russland','Klasse'],d:'Frühe Ausarbeitung der Theorie der permanenten Revolution.',u:'https://www.marxists.org/deutsch/archiv/trotzki/1906/erg-pers/'},
+ {a:'Leo Trotzki',y:1929,t:'Die permanente Revolution',topics:['Revolution','Internationalismus','Klasse'],d:'Systematische Darstellung von Trotzkis Theorie der permanenten Revolution.',u:'https://www.marxists.org/deutsch/archiv/trotzki/1929/permrev/'},
+ {a:'Leo Trotzki',y:1931,t:'Wie wird der Nationalsozialismus geschlagen?',topics:['Faschismus','Deutschland','Einheitsfront'],d:'Trotzki zur faschistischen Gefahr und zur proletarischen Einheitsfront.',u:'https://www.marxists.org/deutsch/archiv/trotzki/1931/12/ns.htm'},
+ {a:'Leo Trotzki',y:1933,t:'Porträt des Nationalsozialismus',topics:['Faschismus','Deutschland','Kapitalismus'],d:'Analyse der sozialen und politischen Struktur des Nationalsozialismus.',u:'https://www.marxists.org/deutsch/archiv/trotzki/1933/06/portrat.htm'},
+ {a:'Clara Zetkin',y:1889,t:'Die Arbeiterinnen- und Frauenfrage der Gegenwart',topics:['Frauen','Klasse','Arbeit'],d:'Früher sozialistischer Grundtext zur Frauen- und Arbeiterinnenfrage.',u:'https://www.marxists.org/deutsch/archiv/zetkin/'},
+ {a:'Clara Zetkin',y:1923,t:'Der Kampf gegen den Faschismus',topics:['Faschismus','Einheitsfront','Klasse'],d:'Zetkins frühe marxistische Analyse des Faschismus und seiner sozialen Basis.',u:'https://www.marxists.org/deutsch/archiv/zetkin/1923/06/faschism.htm'},
+ {a:'Emma Goldman',y:1910,t:'Anarchismus: Wofür er wirklich steht',topics:['Anarchismus','Freiheit','Staat'],d:'Goldmans programmatische Verteidigung anarchistischer Ideen.',u:'https://www.marxists.org/deutsch/referenz/goldman/'},
+ {a:'Peter Kropotkin',y:1902,t:'Gegenseitige Hilfe',topics:['Anarchismus','Gesellschaft','Evolution'],d:'Kropotkins Gegenentwurf zu sozialdarwinistischen Gesellschaftsbildern.',u:'https://www.marxists.org/deutsch/referenz/kropotkin/'},
+ {a:'Georgi Dimitroff',y:1935,t:'Die Offensive des Faschismus',topics:['Faschismus','Einheitsfront','Kommunismus'],d:'Komintern-Rede über Faschismus und antifaschistische Einheitsfrontpolitik.',u:'https://www.marxists.org/deutsch/archiv/dimitroff/1935/bericht/'},
+ {a:'Karl Kautsky',y:1909,t:'Der Weg zur Macht',topics:['Revolution','Parlament','Klasse'],d:'Kautsky über politische Macht, Klassenkampf und revolutionäre Perspektiven.',u:'https://www.marxists.org/deutsch/archiv/kautsky/1909/macht/'},
+ {a:'Anton Pannekoek',y:1920,t:'Weltrevolution und kommunistische Taktik',topics:['Räte','Kommunismus','Revolution'],d:'Rätekommunistische Kritik parlamentarischer und parteipolitischer Taktik.',u:'https://www.marxists.org/deutsch/archiv/pannekoek/1920/weltrev/'},
+ {a:'Georg Lukács',y:1923,t:'Geschichte und Klassenbewußtsein',topics:['Klasse','Philosophie','Bewusstsein'],d:'Ein Schlüsselwerk des westlichen Marxismus zu Klasse, Verdinglichung und Bewusstsein.',u:'https://www.marxists.org/deutsch/archiv/lukacs/1923/geschichte-klassenbewusstsein/'},
+ {a:'Ernesto Che Guevara',y:1965,t:'Der Sozialismus und der Mensch in Kuba',topics:['Sozialismus','Kuba','Mensch'],d:'Guevara über sozialistische Entwicklung, Bewusstsein und den „neuen Menschen“.',u:'https://www.marxists.org/deutsch/archiv/guevara/1965/mensch/'},
+];
+const topicList=['Anarchismus','Staat','Revolution','Kapitalismus','Faschismus','Religion','Klasse','Partei','Imperialismus','Frauen','Räte','Philosophie'];
+const $=s=>document.querySelector(s), cards=$('#cards'), q=$('#q'), author=$('#author'), sort=$('#sort'), count=$('#count'), topics=$('#topics');
+[...new Set(works.map(w=>w.a))].sort((a,b)=>a.localeCompare(b,'de')).forEach(a=>{let o=document.createElement('option');o.value=a;o.textContent=a;author.appendChild(o)});
+topicList.forEach(t=>{let b=document.createElement('button');b.className='topic';b.textContent=t;b.dataset.topic=t;b.onclick=()=>{b.classList.toggle('active');render()};topics.appendChild(b)});
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function render(){
+ const term=norm(q.value.trim()), selected=[...document.querySelectorAll('.topic.active')].map(x=>x.dataset.topic);
+ let list=works.filter(w=> (!author.value||w.a===author.value) && (!selected.length||selected.every(t=>w.topics.includes(t))) && (!term||norm([w.a,w.t,w.d,...w.topics,w.y].join(' ')).includes(term)) );
+ if(sort.value==='yearAsc')list.sort((a,b)=>a.y-b.y); else if(sort.value==='yearDesc')list.sort((a,b)=>b.y-a.y); else if(sort.value==='author')list.sort((a,b)=>a.a.localeCompare(b.a,'de')||a.y-b.y);
+ count.textContent=`${list.length} von ${works.length} erfassten Texten`;
+ cards.innerHTML=list.length?'':`<div class="empty">Keine Treffer. Entferne einen Filter oder versuche einen allgemeineren Suchbegriff.</div>`;
+ list.forEach(w=>{let el=document.createElement('article');el.className='card';el.innerHTML=`<div class="meta"><span class="author">${w.a}</span><span class="year">${w.y}</span></div><h3>${w.t}</h3><div class="desc">${w.d}</div><div class="tags">${w.topics.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="actions"><a class="btn primary" href="${w.u}" target="_blank" rel="noopener">Original lesen ↗</a><button class="btn" onclick="document.getElementById('q').value='${w.a.replaceAll("'","\\'")}'; render()">Mehr vom Autor</button></div>`;cards.appendChild(el)});
+}
+q.addEventListener('input',render);author.addEventListener('change',render);sort.addEventListener('change',render);render();
+</script>
+</body>
+</html>
